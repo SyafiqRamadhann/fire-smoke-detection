@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Detection History - Fire & Smoke Detection{% endblock %}
+{% block page_title %}Detection History{% endblock %}
+{% block page_subtitle %}Riwayat seluruh sesi deteksi yang tersimpan{% endblock %}
+
+{% block content %}
+
+<div class="content-card">
+  <div class="card-header-custom d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <span><i class="bi bi-clock-history text-primary"></i> Riwayat Deteksi</span>
+    <div class="d-flex gap-2">
+      <select class="form-select form-select-sm" id="filterMode" style="width:auto;">
+        <option value="">Semua Mode</option>
+        <option value="image">Image</option>
+        <option value="video">Video</option>
+        <option value="realtime">Real-Time</option>
+      </select>
+      <button class="btn btn-sm btn-outline-secondary" id="btnRefreshHistory">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Mode</th>
+          <th>File</th>
+          <th>Fire</th>
+          <th>Smoke</th>
+          <th>Confidence</th>
+          <th>FPS</th>
+          <th>Waktu</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="historyTableBody">
+        <tr><td colspan="9" class="text-center py-4 text-muted">Memuat data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center p-3" id="paginationBox">
+    <small class="text-muted" id="paginationInfo">-</small>
+    <div class="btn-group">
+      <button class="btn btn-sm btn-outline-secondary" id="btnPrevPage"><i class="bi bi-chevron-left"></i></button>
+      <button class="btn btn-sm btn-outline-secondary" id="btnNextPage"><i class="bi bi-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/history.js"></script>
+{% endblock %}

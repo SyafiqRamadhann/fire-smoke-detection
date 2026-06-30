@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}About - Fire & Smoke Detection{% endblock %}
+{% block page_title %}About{% endblock %}
+{% block page_subtitle %}Informasi tentang aplikasi dan model yang digunakan{% endblock %}
+
+{% block content %}
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="content-card mb-3">
+      <div class="card-header-custom">
+        <i class="bi bi-info-circle-fill text-primary"></i> Tentang Aplikasi
+      </div>
+      <div class="card-body-custom">
+        <h5 class="fw-800 mb-2">FlareGuard — Fire & Smoke Detection System</h5>
+        <p class="text-muted mb-3">
+          Aplikasi web untuk mendeteksi api dan asap secara otomatis menggunakan model
+          YOLO11 (You Only Look Once versi 11). Aplikasi ini dikembangkan sebagai proyek
+          mata kuliah Computer Vision dengan tiga mode deteksi: gambar statis, video, dan
+          kamera real-time.
+        </p>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="p-3 bg-fire-soft rounded-xl text-center">
+              <i class="bi bi-image-fill fs-3 text-fire d-block mb-2"></i>
+              <div class="fw-700 fs-13">Image Detection</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 rounded-xl text-center" style="background:rgba(124,58,237,.08)">
+              <i class="bi bi-camera-video-fill fs-3 d-block mb-2" style="color:#7c3aed"></i>
+              <div class="fw-700 fs-13">Video Detection</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 rounded-xl text-center" style="background:rgba(67,97,238,.08)">
+              <i class="bi bi-broadcast fs-3 d-block mb-2" style="color:#4361ee"></i>
+              <div class="fw-700 fs-13">Live Detection</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="card-header-custom">
+        <i class="bi bi-cpu-fill text-success"></i> Informasi Model
+      </div>
+      <div class="card-body-custom">
+        <table class="table table-borderless mb-0 fs-13">
+          <tbody>
+            <tr><td class="text-muted" style="width:160px;">Arsitektur</td><td class="fw-700">YOLO11 (Nano)</td></tr>
+            <tr><td class="text-muted">Dataset</td><td class="fw-700">10.463 gambar beranotasi</td></tr>
+            <tr><td class="text-muted">Kelas</td><td class="fw-700">Fire, Smoke</td></tr>
+            <tr><td class="text-muted">Precision</td><td class="fw-700 text-success">80.6%</td></tr>
+            <tr><td class="text-muted">Recall</td><td class="fw-700 text-success">71.7%</td></tr>
+            <tr><td class="text-muted">mAP@50</td><td class="fw-700 text-success">77.0%</td></tr>
+            <tr><td class="text-muted">mAP@50-95</td><td class="fw-700 text-success">49.2%</td></tr>
+            <tr><td class="text-muted">Kecepatan Inferensi</td><td class="fw-700">&lt;15ms/frame (GPU)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="content-card mb-3">
+      <div class="card-header-custom">
+        <i class="bi bi-stack text-warning"></i> Tech Stack
+      </div>
+      <div class="card-body-custom">
+        <div class="d-flex flex-column gap-2">
+          <span class="badge bg-dark text-start p-2"><i class="bi bi-server me-1"></i> FastAPI (Backend)</span>
+          <span class="badge bg-dark text-start p-2"><i class="bi bi-eye me-1"></i> Ultralytics YOLO11</span>
+          <span class="badge bg-dark text-start p-2"><i class="bi bi-camera me-1"></i> OpenCV</span>
+          <span class="badge bg-dark text-start p-2"><i class="bi bi-database me-1"></i> SQLite + SQLAlchemy</span>
+          <span class="badge bg-dark text-start p-2"><i class="bi bi-bootstrap me-1"></i> Bootstrap 5</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="card-header-custom">
+        <i class="bi bi-github"></i> Kredit Model
+      </div>
+      <div class="card-body-custom">
+        <p class="fs-13 text-muted mb-2">
+          Model YOLO11 yang digunakan diadaptasi dari repository open-source:
+        </p>
+        <a href="https://github.com/sayedgamal99/Real-Time-Smoke-Fire-Detection-YOLO11"
+           target="_blank" class="text-decoration-none fs-13 fw-700">
+          <i class="bi bi-box-arrow-up-right me-1"></i>
+          sayedgamal99/Real-Time-Smoke-Fire-Detection-YOLO11
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

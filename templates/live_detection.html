@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Live Detection - Fire & Smoke Detection{% endblock %}
+{% block page_title %}Live Detection{% endblock %}
+{% block page_subtitle %}Deteksi api dan asap secara real-time melalui webcam{% endblock %}
+
+{% block content %}
+
+<div class="row g-3">
+  <!-- Camera Feed -->
+  <div class="col-lg-8">
+    <div class="content-card">
+      <div class="card-header-custom d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-camera-video-fill text-danger"></i> Live Camera Feed</span>
+        <span class="badge bg-secondary-subtle text-secondary" id="connStatus">Disconnected</span>
+      </div>
+      <div class="card-body-custom">
+
+        <div class="camera-feed" id="cameraFeed">
+          <video id="videoElement" autoplay playsinline muted style="display:none;"></video>
+          <img id="outputImage" style="display:none;">
+          <canvas id="captureCanvas" style="display:none;"></canvas>
+
+          <div class="result-placeholder" id="cameraPlaceholder" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+            <i class="bi bi-camera-video-off"></i>
+            <div>Kamera belum aktif</div>
+          </div>
+
+          <div class="camera-overlay d-none" id="cameraOverlay">
+            <span class="fps-badge" id="fpsBadge">FPS: 0.0</span>
+            <span class="rec-badge"><span class="rec-dot"></span> LIVE</span>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-fire flex-fill" id="btnStart">
+            <i class="bi bi-play-fill"></i> Start Detection
+          </button>
+          <button class="btn btn-stop flex-fill d-none" id="btnStop">
+            <i class="bi bi-stop-fill"></i> Stop Detection
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Stats -->
+  <div class="col-lg-4">
+    <div class="content-card mb-3">
+      <div class="card-header-custom">
+        <i class="bi bi-activity text-success"></i> Statistik Real-Time
+      </div>
+      <div class="card-body-custom">
+        <div class="live-stat-row">
+          <div class="live-stat-box">
+            <div class="live-stat-num text-fire" id="liveFireCount">0</div>
+            <div class="live-stat-lbl">Fire</div>
+          </div>
+          <div class="live-stat-box">
+            <div class="live-stat-num text-smoke" id="liveSmokeCount">0</div>
+            <div class="live-stat-lbl">Smoke</div>
+          </div>
+          <div class="live-stat-box">
+            <div class="live-stat-num" style="color:#10b981" id="liveFps">0</div>
+            <div class="live-stat-lbl">FPS</div>
+          </div>
+          <div class="live-stat-box">
+            <div class="live-stat-num" style="color:#4361ee" id="liveFrameCount">0</div>
+            <div class="live-stat-lbl">Frame</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="card-header-custom">
+        <i class="bi bi-list-check text-primary"></i> Status Deteksi
+      </div>
+      <div class="card-body-custom">
+        <div id="detectionStatusBox" class="text-center py-3">
+          <i class="bi bi-shield-check fs-1 text-success d-block mb-2"></i>
+          <div class="fw-700">Aman — Tidak ada bahaya</div>
+          <small class="text-muted">Status akan diperbarui secara real-time</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/camera_detect.js"></script>
+{% endblock %}

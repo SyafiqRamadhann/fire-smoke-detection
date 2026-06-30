@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Image Detection - Fire & Smoke Detection{% endblock %}
+{% block page_title %}Image Detection{% endblock %}
+{% block page_subtitle %}Upload gambar untuk mendeteksi api dan asap{% endblock %}
+
+{% block content %}
+
+<div class="row g-3">
+  <!-- Upload Panel -->
+  <div class="col-lg-5">
+    <div class="content-card">
+      <div class="card-header-custom">
+        <i class="bi bi-cloud-upload-fill text-primary"></i>
+        Upload Gambar
+      </div>
+      <div class="card-body-custom">
+
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" hidden>
+          <i class="bi bi-image upload-icon"></i>
+          <div class="upload-text">Klik atau seret gambar ke sini</div>
+          <div class="upload-subtext">Mendukung JPG, PNG (maks. 10MB)</div>
+        </div>
+
+        <div id="previewBox" class="mt-3 d-none">
+          <img id="previewImg" class="w-100 rounded-xl" style="max-height:240px; object-fit:contain; background:#f4f6fb;">
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <small class="text-muted" id="fileName">-</small>
+            <button class="btn btn-sm btn-outline-secondary" id="btnRemoveFile">
+              <i class="bi bi-x"></i> Hapus
+            </button>
+          </div>
+        </div>
+
+        <button class="btn btn-fire w-100 mt-3" id="btnDetect" disabled>
+          <i class="bi bi-search"></i> Jalankan Deteksi
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Panel -->
+  <div class="col-lg-7">
+    <div class="content-card">
+      <div class="card-header-custom d-flex justify-content-between">
+        <span><i class="bi bi-graph-up-arrow text-success"></i> Hasil Deteksi</span>
+        <button class="btn btn-sm btn-fire d-none" id="btnDownload">
+          <i class="bi bi-download"></i> Download
+        </button>
+      </div>
+      <div class="card-body-custom">
+
+        <div class="result-image-box mb-3" id="resultBox">
+          <div class="result-placeholder">
+            <i class="bi bi-image"></i>
+            <div>Hasil deteksi akan muncul di sini</div>
+          </div>
+        </div>
+
+        <div id="loadingBox" class="d-none text-center py-4">
+          <div class="spinner-fire mx-auto mb-2"></div>
+          <div class="text-muted fs-13">Memproses deteksi...</div>
+        </div>
+
+        <div id="statsRow" class="row g-2 d-none">
+          <div class="col-4">
+            <div class="live-stat-box">
+              <div class="live-stat-num text-fire" id="resFire">0</div>
+              <div class="live-stat-lbl">Fire</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="live-stat-box">
+              <div class="live-stat-num text-smoke" id="resSmoke">0</div>
+              <div class="live-stat-lbl">Smoke</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="live-stat-box">
+              <div class="live-stat-num" style="color:#4361ee" id="resConf">0%</div>
+              <div class="live-stat-lbl">Avg Confidence</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="detailList" class="mt-3"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/image_detect.js"></script>
+{% endblock %}

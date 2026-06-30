@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Fire & Smoke Detection{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Ringkasan statistik sistem deteksi{% endblock %}
+
+{% block content %}
+
+<!-- ── Stat Cards Row ───────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon fire"><i class="bi bi-fire"></i></div>
+      <div>
+        <div class="stat-value" id="statTotalFire">0</div>
+        <div class="stat-label">Total Fire Detection</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon smoke"><i class="bi bi-cloud-haze2-fill"></i></div>
+      <div>
+        <div class="stat-value" id="statTotalSmoke">0</div>
+        <div class="stat-label">Total Smoke Detection</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon conf"><i class="bi bi-bullseye"></i></div>
+      <div>
+        <div class="stat-value" id="statAvgConf">0%</div>
+        <div class="stat-label">Average Confidence</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon fps"><i class="bi bi-speedometer2"></i></div>
+      <div>
+        <div class="stat-value" id="statAvgFps">0</div>
+        <div class="stat-label">Average FPS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <!-- Quick Actions -->
+  <div class="col-lg-8">
+    <div class="content-card h-100">
+      <div class="card-header-custom">
+        <i class="bi bi-lightning-charge-fill text-warning"></i>
+        Mode Deteksi
+      </div>
+      <div class="card-body-custom">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <a href="/image" class="text-decoration-none">
+              <div class="p-3 rounded-xl border h-100 text-center" style="transition:.2s;" onmouseover="this.style.borderColor='#4361ee'" onmouseout="this.style.borderColor='#dee2e6'">
+                <i class="bi bi-image-fill fs-1 text-primary mb-2 d-block"></i>
+                <div class="fw-700 text-dark">Image Detection</div>
+                <small class="text-muted">Upload JPG / PNG</small>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a href="/video" class="text-decoration-none">
+              <div class="p-3 rounded-xl border h-100 text-center" style="transition:.2s;" onmouseover="this.style.borderColor='#7c3aed'" onmouseout="this.style.borderColor='#dee2e6'">
+                <i class="bi bi-camera-video-fill fs-1 mb-2 d-block" style="color:#7c3aed"></i>
+                <div class="fw-700 text-dark">Video Detection</div>
+                <small class="text-muted">Upload MP4 / AVI</small>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a href="/live" class="text-decoration-none">
+              <div class="p-3 rounded-xl border h-100 text-center" style="transition:.2s;" onmouseover="this.style.borderColor='#dc2626'" onmouseout="this.style.borderColor='#dee2e6'">
+                <i class="bi bi-broadcast fs-1 text-danger mb-2 d-block"></i>
+                <div class="fw-700 text-dark">Live Detection</div>
+                <small class="text-muted">Real-time Webcam</small>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Model -->
+  <div class="col-lg-4">
+    <div class="content-card h-100">
+      <div class="card-header-custom">
+        <i class="bi bi-cpu-fill text-primary"></i>
+        Status Sistem
+      </div>
+      <div class="card-body-custom">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+          <span class="text-muted fs-13">Status Model</span>
+          <span class="fw-700" id="dashModelStatus">
+            <span class="status-dot ready d-inline-block me-1" style="width:8px;height:8px;"></span>
+            Memuat...
+          </span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+          <span class="text-muted fs-13">Total Sesi</span>
+          <span class="fw-700" id="statTotalSession">0</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="text-muted fs-13">Deteksi Terakhir</span>
+          <span class="fw-700 fs-13" id="statLastDetection">-</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function syncDashModelStatus() {
+  try {
+    const res = await fetch("/api/model/info");
+    const data = await res.json();
+    const el = document.getElementById("dashModelStatus");
+    if (data.loaded) {
+      el.innerHTML = '<span class="d-inline-block rounded-circle me-1" style="width:8px;height:8px;background:#22c55e;"></span> Ready';
+      el.classList.add("text-success");
+    } else {
+      el.innerHTML = '<span class="d-inline-block rounded-circle me-1" style="width:8px;height:8px;background:#ef4444;"></span> Not Loaded';
+      el.classList.add("text-danger");
+    }
+  } catch (e) {
+    document.getElementById("dashModelStatus").textContent = "Offline";
+  }
+}
+syncDashModelStatus();
+</script>
+{% endblock %}

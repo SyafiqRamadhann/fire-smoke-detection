@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Fire & Smoke Detection{% endblock %}</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+  <link href="/static/css/style.css" rel="stylesheet"/>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- ── Sidebar ──────────────────────────────────────────────────────── -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <i class="bi bi-fire"></i>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">FlareGuard</span>
+      <span class="brand-sub">Detection System</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+
+    <a href="/" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+      <i class="bi bi-grid-1x2-fill"></i>
+      <span>Dashboard</span>
+    </a>
+    <a href="/image" class="nav-item {% if active_page == 'image' %}active{% endif %}">
+      <i class="bi bi-image-fill"></i>
+      <span>Image Detection</span>
+    </a>
+    <a href="/video" class="nav-item {% if active_page == 'video' %}active{% endif %}">
+      <i class="bi bi-camera-video-fill"></i>
+      <span>Video Detection</span>
+    </a>
+    <a href="/live" class="nav-item {% if active_page == 'live' %}active{% endif %}">
+      <div class="d-flex align-items-center gap-2 flex-grow-1">
+        <i class="bi bi-broadcast"></i>
+        <span>Live Detection</span>
+      </div>
+      <span class="nav-badge live-badge">LIVE</span>
+    </a>
+
+    <div class="nav-section-label mt-3">Data</div>
+
+    <a href="/history" class="nav-item {% if active_page == 'history' %}active{% endif %}">
+      <i class="bi bi-clock-history"></i>
+      <span>Detection History</span>
+    </a>
+    <a href="/about" class="nav-item {% if active_page == 'about' %}active{% endif %}">
+      <i class="bi bi-info-circle-fill"></i>
+      <span>About</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="model-status" id="sidebarModelStatus">
+      <div class="status-dot" id="statusDot"></div>
+      <div>
+        <div class="status-label">Model Status</div>
+        <div class="status-value" id="statusText">Checking...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Overlay mobile ─────────────────────────────────────────────── -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ── Main Content ──────────────────────────────────────────────── -->
+<div class="main-content" id="mainContent">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="btn-sidebar-toggle" id="sidebarToggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="topbar-title">
+      <h5 class="mb-0">{% block page_title %}Dashboard{% endblock %}</h5>
+      <small class="text-muted">{% block page_subtitle %}Sistem Deteksi Api dan Asap{% endblock %}</small>
+    </div>
+    <div class="topbar-right">
+      <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill">
+        YOLO11
+      </span>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-body">
+    {% block content %}{% endblock %}
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Global JS -->
+<script src="/static/js/dashboard.js"></script>
+
+<script>
+// Sidebar toggle
+const sidebar      = document.getElementById('sidebar');
+const mainContent  = document.getElementById('mainContent');
+const overlay      = document.getElementById('sidebarOverlay');
+const toggleBtn    = document.getElementById('sidebarToggle');
+
+function toggleSidebar() {
+  sidebar.classList.toggle('collapsed');
+  mainContent.classList.toggle('expanded');
+  overlay.classList.toggle('active');
+}
+
+toggleBtn.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+
+// Auto-collapse on mobile
+if (window.innerWidth < 992) {
+  sidebar.classList.add('collapsed');
+  mainContent.classList.add('expanded');
+}
+</script>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>
