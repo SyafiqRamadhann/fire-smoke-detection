@@ -23,8 +23,8 @@ const liveFps         = document.getElementById("liveFps");
 const liveFrameCount  = document.getElementById("liveFrameCount");
 const detectionStatusBox = document.getElementById("detectionStatusBox");
 
-const CAPTURE_FPS = 10;          // kirim frame ke server 10x/detik
-const JPEG_QUALITY = 0.7;
+const CAPTURE_FPS = 2;          // kirim frame ke server 10x/detik
+const JPEG_QUALITY = 0.5;
 
 // ── Start Detection ────────────────────────────────────────────────
 btnStart.addEventListener("click", async () => {
